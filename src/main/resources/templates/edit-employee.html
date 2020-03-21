@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<title>Employees</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	</head>
+
+	<body>
+	
+	<h1 align="center">Employee Detail</h1>
+	
+	<span style="float: right; margin-right: 10px; font-size: x-large;">
+		<a href="/add-employee">Add new Employee</a>
+	</span>
+	<div th:with="xyz = ${editingEmp.empId}">
+		<!-- Editing Emp: <span th:text="${editingEmp.empId}"></span><br>
+		without condition: <span th:text="${xyz}"> asdf </span>
+		outside table from empid: <span  th:if="${editingEmp.empId} == 3" th:text="${xyz}"> asdf </span>
+		outside table from xyz: <span  th:if="${xyz} == 3" th:text="${xyz}"> ssdf </span>  -->
+		
+		<table border="1" class="table table-striped" style="margin-top: 50px;">
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Salary</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			
+			<th:block th:each="emp : ${employees}">
+				<th:block th:if="${emp.empId} == ${xyz}">
+					<tr>
+					<form action="#" th:action="@{/update-employee/{empId}(empId=${emp.empId})}" th:object="${employee}" method="post">
+					<td th:text="${emp.empId}" th:name="empId"></td>
+					<td>
+						<input type="text" class="form-control" id="empName" th:value="${emp.empName}" th:name="empName"/>
+					</td>
+					<td>
+						<input type="email" class="form-control" id="emailId" th:value="${emp.emailId}" th:name="emailId"/>
+					</td>
+					<td>
+						<input type="text" class="form-control" id="salary" th:value="${emp.salary}" th:name="salary">
+					</td>
+					<td>
+							<button type="submit" class="btn btn-primary">Save</button>
+					</td>
+					<td > 
+						<a th:href="@{/update-cancel}">
+							<button type="button" class="btn btn-danger" name="delBtn" th:value="${emp.empId}">Cancel</button>
+						</a>
+					</td>
+					</form>
+				</tr>
+			</th:block>
+			
+			<th:block th:unless="${emp.empId} == ${xyz}">
+				<tr>
+					<td th:text="${emp.empId}"></td>
+					<td th:text="${emp.empName}"></td>
+					<td th:text="${emp.emailId}"></td>
+					<td th:text="${emp.salary}"></td>
+					<td ><button type="button" class="btn btn-primary" disabled>Edit</button></td>
+					<td ><button type="button" class="btn btn-danger" disabled>Delete</button></td>
+				</tr>
+			</th:block>	
+		</th:block>
+		</table>
+		
+		</div>
+	</body>
+
+</html>

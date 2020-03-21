@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<title>Employees</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	</head>
+
+	<body>
+	
+	<h1 align="center">Employee Detail</h1>
+	
+	<span style="float: right; margin-right: 10px; font-size: x-large;">
+		<a href="/add-employee">Add new Employee</a>
+	</span>
+		
+		<table border="1" class="table table-striped" style="margin-top: 50px;">
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Salary</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+			<tr th:each="emp : ${employees}">
+			<td th:text="${emp.empId}"></td>
+				<td th:text="${emp.empName}"></td>
+				<td th:text="${emp.emailId}"></td>
+				<td th:text="${emp.salary}"></td>
+				<td >
+					<a th:href="@{/edit-employee/{empId}(empId=${emp.empId})}">
+						<button type="button" class="btn btn-primary">Edit</button>
+					</a>
+				</td>
+				<td >
+					<a th:href="@{/delete/{empId}(empId=${emp.empId})}">
+						<button type="button" class="btn btn-danger" name="delBtn" th:value="${emp.empId}">Delete</button>
+					</a>
+				</td>
+			</tr>
+		</table>
+		
+	</body>
+
+</html>
